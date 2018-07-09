@@ -1,0 +1,65 @@
+Автоформатирование стиля кода(если еще не ставил):
+npm i prettier -g
+потом запускай
+prettier --tab-width 4 --single-quote --print-width 120 --trailing-comma es5 --parser typescript --write "**/*.ts"
+prettier --tab-width 4 --print-width 120 --write "**/*.scss"
+ng serve --open  --disable-host-check
+
+
+
+STYLE GUIDE
+ https://github.com/lazy-ants/javascript
+ https://github.com/azat-io/you-dont-know-js-ru
+ https://github.com/UltimateAngular/angular-pro-src
+
+
+[ci skip]
+
+npm run build:ssr
+node dist/server
+localhost:4000
+
+Правила работы с гитом:
+Когда берете задачу в работу -> создаете ветку
+На каждую задачу новую ветку
+Если ветку создавали от base, значит пулл реквест делаем в base
+Для синхронизации изменений с base веткой, используем rebase (!)
+    git checkout BASE_BRANCH_NAME
+    git pull origin BASE_BRANCH_NAME
+    git checkout YOUR_BRANCH_NAME
+    git rebase BASE_BRANCH_NAME
+Перед созданием новой ветки от base ветки, ее надо актуализировать, стянув последние коммиты
+    git checkout BASE_BRANCH_NAME
+    git pull origin BASE_BRANCH_NAME
+    git checkout -b YOUR_BRANCH_NAME
+Синхронизацию изменений выполнять как можно чаще, каждое утро обязательно
+Основные команды:
+    git checkout BRANCH - перейти на ветку BRANCH
+    git pull origin BRANCH - актуализировать коммиты на локальной ветке BRANCH
+    git checkout -b BRANCH - создание новой ветки BRANCH
+    git rebase BRANCH - синхронизировать текущую ветку с веткой BRANCH
+    git commit -m "Commit name" - создание коммита
+    git push origin BRANCH - запушить локальные изменения ветки BRANCH на ремоут
+Как правило, после rebase запушить прийдется с форсом
+    git push origin BRANCH -f 
+
+////////////////////////////////////////////////////////////
+ .size {
+    white-space: nowrap; /* Отменяем перенос текста */
+    overflow: hidden; /* Обрезаем содержимое */
+    text-overflow: ellipsis; /* Многоточие */
+   }
+
+
+   .back-img {
+    height: 100%;
+    width: 100%;
+    max-height: 300% !important;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+////////////////////////////////////////////////////////////
+
+
