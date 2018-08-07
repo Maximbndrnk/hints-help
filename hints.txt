@@ -1,4 +1,4 @@
-Автоформатирование стиля кода(если еще не ставил):
+﻿Автоформатирование стиля кода(если еще не ставил):
 npm i prettier -g
 потом запускай
 prettier --tab-width 4 --single-quote --print-width 120 --trailing-comma es5 --parser typescript --write "**/*.ts"
@@ -73,15 +73,25 @@ localhost:4000
              z-index: 100;
          }
   }
+
+.map::ng-deep app-star-rating .rating-container .mark {
+    color: #fff;
+} // для изменения стиля вложеного компонента
+
 ////////////////////////////////////////////////////////////
 
 
 ngrok - remote view
 
 
+maxim.bondarenko@lazy-ants.com
 
-
-
+Observable.of(true)
+            .delay(7000)
+            .do(() => {
+                this.loaders = [false, false, false, false, false];
+            })
+            .toPromise();
 
 
 

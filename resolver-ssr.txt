@@ -1,0 +1,72 @@
+import { Injectable, OnDestroy } from '@angular/core';
+import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+
+import { DockService } from '@dockers/core/dock/dock.service';
+import { IsPlatformBrowserService } from '@dockers/core/is-platform-browser.service';
+import { makeStateKey, TransferState } from '@angular/platform-browser';
+
+@Injectable()
+export class ReviewResolver implements Resolve<Observable<any>>, OnDestroy {
+    platform: any;
+    isServer: boolean;
+    reviewsServerState = makeStateKey<any>('reviews');
+    reviews: any;
+
+    constructor(
+        private readonly dockService: DockService,
+        private isPlatformBrowserService: IsPlatformBrowserService,
+        private transferState: TransferState
+    ) {}
+
+    resolve(route: ActivatedRouteSnapshot): Observable<any> | Promise<any> | any {
+        const id = route.params.id;
+
+        this.platform = this.isPlatformBrowserService.isServer().subscribe(res => {
+            this.isServer = res;
+        });
+
+        return new Promise((resolve, reject) => {
+            if (this.transferState.hasKey(this.reviewsServerState)) {
+                const reviews = this.transferState.get(this.reviewsServerState, {});
+                this.transferState.remove(this.reviewsServerState);
+
+                resolve(reviews);
+            } else if (this.isServer) {
+                this.fetchData(id, resolve);
+            } else {
+                this.fetchData(id, resolve);
+            }
+        });
+    }
+
+    ngOnDestroy() {
+        this.platform.unsubscribe();
+    }
+
+    private fetchData(id, resolve?) {
+        let rev: any;
+
+        this.dockService.getDockReviews(id).subscribe(
+            res => {
+                const r: any = res;
+                rev = r.reviews;
+
+                if (this.isServer) {
+                    this.transferState.set(this.reviewsServerState, rev);
+                }
+
+                resolve(rev);
+            },
+            err => {
+                rev = {};
+
+                if (this.isServer) {
+                    this.transferState.set(this.reviewsServerState, rev);
+                }
+
+                resolve(rev);
+            }
+        );
+    }
+}
